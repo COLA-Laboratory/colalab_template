@@ -9,9 +9,10 @@
 
 \usepackage{fullpage}
 \usepackage[ruled, linesnumbered, vlined, commentsnumbered]{algorithm2e}
-\usepackage{graphicx,subfig} % figure related
+\usepackage{graphicx,subcaption} % figure related
 \usepackage{amsfonts,amssymb,amsmath,amsthm,amsopn}	% math related
 \usepackage{hhline,booktabs,colortbl,multirow,tabularx,threeparttable} % table related
+\usepackage[numbers]{natbib}
 
 % Captions: make the "Figure X"/"Table X" label bold (text remains normal).
 % (Provided by the caption package, which is pulled in by subfig.)
@@ -180,13 +181,14 @@
 
 \input{sections/conclusion}
 
-\appendix
-\input{sections/appendix}
-
 \section*{Acknowledgment}
 [Optional.] Acknowledge funding, collaborators, reviewers, and other support.
 
-\bibliographystyle{references/IEEEtran}
+\bibliographystyle{plainnat}
 \bibliography{references/references}
+
+\appendix
+\newpage
+\input{sections/appendix}
 
 \end{document}
