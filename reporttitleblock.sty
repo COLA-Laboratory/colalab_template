@@ -1,4 +1,4 @@
- % reporttitleblock.sty
+% reporttitleblock.sty
 % Title block helpers for the technical report template.
 %
 % Provides:
@@ -20,6 +20,10 @@
 
 \RequirePackage{xparse}
 \RequirePackage{xcolor}
+\RequirePackage{expl3}
+\RequirePackage{l3keys2e}
+\RequirePackage{lmodern}
+\RequirePackage{lmodern}
 
 % Provide defaults if the main document doesn't define these colors.
 \providecolor{headerblue}{RGB}{0,85,150}
@@ -27,10 +31,14 @@
 \providecolor{titlegray}{RGB}{80,80,80}
 
 \ExplSyntaxOn
+\cs_if_exist:NF \tl_if_blank:NF
+  { \cs_new:Npn \tl_if_blank:NF #1#2 { \tl_if_blank:nF { \tl_use:N #1 } {#2} } }
 \tl_new:N \g_report_title_tl
 \tl_new:N \g_report_subtitle_tl
 \tl_new:N \g_report_equal_note_tl
 \tl_new:N \g_report_corr_label_tl
+\tl_new:N \g_report_title_mark_tl
+\tl_new:N \g_report_accepted_note_tl
 \seq_new:N \g_report_authors_seq
 \seq_new:N \g_report_affil_keys_seq
 \prop_new:N \g_report_affils_prop
@@ -40,8 +48,12 @@
 
 \tl_gset:Nn \g_report_equal_note_tl {These~authors~contributed~equally }
 \tl_gset:Nn \g_report_corr_label_tl {Corresponding~author }
+\tl_gset:Nn \g_report_title_mark_tl { }
+\tl_gset:Nn \g_report_accepted_note_tl { }
 
 \NewDocumentCommand{\ReportTitle}{m}{\tl_gset:Nn \g_report_title_tl {#1}}
+\NewDocumentCommand{\ReportTitleMark}{m}{\tl_gset:Nn \g_report_title_mark_tl {#1}}
+\NewDocumentCommand{\ReportAcceptedNote}{m}{\tl_gset:Nn \g_report_accepted_note_tl {#1}}
 \NewDocumentCommand{\ReportSubtitle}{m}{\tl_gset:Nn \g_report_subtitle_tl {#1}}
 \NewDocumentCommand{\ReportEqualNote}{m}{\tl_gset:Nn \g_report_equal_note_tl {#1}}
 \NewDocumentCommand{\ReportCorrespondingLabel}{m}{\tl_gset:Nn \g_report_corr_label_tl {#1}}
@@ -77,7 +89,7 @@
 {
   \tl_set:Nn \l_tmpa_tl {#1}
   \clist_if_in:nnT {#2} {equal} { \tl_put_right:Nn \l_tmpa_tl { \textdagger } }
-  \clist_if_in:nnT {#2} {corresponding} { \tl_put_right:Nn \l_tmpa_tl { * } }
+  \clist_if_in:nnT {#2} {corresponding} { \tl_put_right:Nn \l_tmpa_tl { \textdaggerdbl } }
   \tl_use:N \l_tmpa_tl
 }
 
@@ -149,29 +161,6 @@
   }
 }
 
-% Print a single "Email: ..." line under affiliations (optional).
-% This macro is used by \MakeReportTitleBlock.
-\cs_set_protected:Npn \report_print_emails_under_affils:
-{
-  \seq_if_empty:NF \g_report_all_emails_seq
-  {
-    \seq_set_eq:NN \l_tmpa_seq \g_report_all_emails_seq
-    \seq_remove_duplicates:N \l_tmpa_seq
-    {\small\color{titlegray}\itshape
-      Email:\space
-      \int_zero:N \l_tmpa_int
-      \int_set:Nn \l_tmpb_int { \seq_count:N \l_tmpa_seq }
-      \seq_map_inline:Nn \l_tmpa_seq
-      {
-        \int_incr:N \l_tmpa_int
-        \report_mailto:n {##1}
-        \int_compare:nNnT { \l_tmpa_int } < { \l_tmpb_int } {,~}
-      }
-      \par
-    }
-  }
-}
-
 % A footnote-like line without any numeric mark.
 % We implement it by temporarily emptying the mark and using \footnotetext.
 \cs_gset_protected:Npn \report_unmarked_footnotetext:n #1
@@ -188,6 +177,14 @@
 \cs_new_protected:Npn \report_footnote_author_notes:
 {
   % All lines below should be unnumbered (no leading 0,1,2,...).
+  \tl_if_blank:NF \g_report_accepted_note_tl
+  {
+    \report_unmarked_footnotetext:n
+    {
+      \textsuperscript{*}\tl_use:N \g_report_accepted_note_tl
+    }
+  }
+
   \bool_if:NT \g_report_has_equal_bool
     { \report_unmarked_footnotetext:n { \textsuperscript{\textdagger}\tl_use:N \g_report_equal_note_tl } }
 
@@ -195,7 +192,7 @@
   {
     \seq_set_eq:NN \l_tmpa_seq \g_report_corr_emails_seq
     \seq_remove_duplicates:N \l_tmpa_seq
-    \report_unmarked_footnotetext:n { \textsuperscript{*}\tl_use:N \g_report_corr_label_tl }
+    \report_unmarked_footnotetext:n { \textsuperscript{\textdaggerdbl}\tl_use:N \g_report_corr_label_tl }
   }
 
 }
@@ -203,7 +200,9 @@
 \NewDocumentCommand{\MakeReportTitleBlock}{}{
   \noindent{\color{headerblue!80}\rule{\textwidth}{0.6pt}}\par\vspace{0.8em}
   {\centering
-    {\LARGE \bfseries \tl_use:N \g_report_title_tl \par}
+    {\LARGE \bfseries \tl_use:N \g_report_title_tl
+      \tl_if_blank:NF \g_report_accepted_note_tl { \textsuperscript{*} }
+      \par}
   }\par\vspace{0.4em}
   \noindent{\color{headerblue}\rule{\textwidth}{0.6pt}}\par\vspace{0.8em}
   {\centering
