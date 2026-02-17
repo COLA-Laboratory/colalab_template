@@ -1,0 +1,57 @@
+%!TeX root=../main.tex
+% -----------------------------------------------------------------------------
+% sections/experiments.tex
+% Purpose: Experimental setup and evaluation protocol.
+%
+% Recommended contents:
+% - Datasets / benchmarks
+% - Baselines
+% - Metrics
+% - Hardware / software environment
+% - Reproducibility details (seeds, versions, configs)
+% -----------------------------------------------------------------------------
+
+\section{Experiments}\label{sec:experiments}
+
+
+\subsection{Setup}\label{sec:experimental_setup}
+
+\begin{itemize}
+    \item Hardware.
+    \item Software.
+    \item Randomness.
+\end{itemize}
+
+\subsection{Datasets / Benchmarks (Example Table)}\label{sec:datasets}
+
+\begin{table}[H]
+    \centering
+    \caption{Example dataset table (replace with your own).}\label{tab:datasets}
+    \begin{tabular}{lrrl}
+        \toprule
+        Dataset & \#Samples & \#Features & Notes \\
+        \midrule
+        Dataset-A & 10{,}000 & 128 &  \\
+        Dataset-B & 50{,}000 & 256 &  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Metrics (Example Definition)}\label{sec:metrics}
+
+For example, if you report mean squared error (MSE), define it explicitly:
+\begin{equation}
+\mathrm{MSE} = \frac{1}{n}\sum_{i=1}^{n}{(\hat{y}_i - y_i)}^2.
+\label{eq:mse}
+\end{equation}
+
+\subsection{Baselines and Ablations}\label{sec:baselines}
+
+\begin{itemize}
+    \item Baseline 1.
+    \item Baseline 2.
+    \item Ablation A.
+\end{itemize}
+
+\subsection{Implementation Details}\label{sec:implementation_details}
+

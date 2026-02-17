@@ -1,0 +1,192 @@
+% -----------------------------------------------------------------------------
+% main.tex
+% Root file for the technical report template.
+%
+% Style is intentionally kept close to the original document. Edit packages and
+% macros below as needed for your report.
+% -----------------------------------------------------------------------------
+\documentclass[11pt]{article}
+
+\usepackage{fullpage}
+\usepackage[ruled, linesnumbered, vlined, commentsnumbered]{algorithm2e}
+\usepackage{graphicx,subfig} % figure related
+\usepackage{amsfonts,amssymb,amsmath,amsthm,amsopn}	% math related
+\usepackage{hhline,booktabs,colortbl,multirow,tabularx,threeparttable} % table related
+
+% Captions: make the "Figure X"/"Table X" label bold (text remains normal).
+% (Provided by the caption package, which is pulled in by subfig.)
+\captionsetup[figure]{labelfont=bf}
+\captionsetup[table]{labelfont=bf}
+
+\usepackage{enumerate}
+\usepackage{footnote}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{prettyref}
+\usepackage{cite}
+\usepackage{setspace}
+\usepackage{color}
+\usepackage{xcolor}  % Required for custom colors
+\usepackage{titlesec} % heading color control
+\usepackage{reporttitleblock} % title block helpers (see sections/title.tex)
+\usepackage{geometry}
+
+% tikz pakcages
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{positioning,shapes,shadows,arrows,calc}
+\tikzstyle{component}=[rectangle, draw=black, rounded corners, fill=blue!40, drop shadow, text centered, anchor=north, text=white, minimum height=1cm]
+\tikzstyle{arrow}=[->, thick]
+
+% Use a reasonably recent pgfplots compatibility level.
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{intersections}
+\usetikzlibrary{pgfplots.statistics}
+\usepgfplotslibrary{fillbetween}
+
+\geometry{a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm} % set the page layout
+
+\usepackage{eso-pic}   % for placing the logo on the page
+\usepackage{titling}   % for fine-grained title control
+\usepackage{fancyhdr}  % custom headers / footers
+\usepackage{lastpage}  % \pageref{LastPage} for total page count
+\usepackage{fontawesome5} % flat icons for footer etc.
+
+% ── Page numbering: icon + "page / total" in the bottom-right ─────────────
+\pagestyle{fancy}
+\fancyhf{}                              % clear all header / footer fields
+\renewcommand{\headrulewidth}{0pt}      % no header rule
+\renewcommand{\footrulewidth}{0pt}      % no footer rule
+\fancyfoot[C]{\small{\color{headerblue}\faBookOpen}~~\thepage\ /\pageref{LastPage}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small{\color{headerblue}\faBookOpen}~~\thepage\ /\pageref{LastPage}}}
+
+% Define a few colors for making text stand out within the presentation
+\definecolor{myblue}{RGB}{34,31,217}
+\definecolor{mycyan}{gray}{.7}
+\definecolor{Gray}{gray}{0.9}
+\definecolor{headerblue}{RGB}{0,85,150}    % header band colour
+\definecolor{natureblue}{RGB}{11,61,145}   % Nature-like deep blue for headings
+\definecolor{titlegray}{RGB}{80,80,80}     % subtitle / affiliation text
+\definecolor{titlebox}{RGB}{245,248,252}   % title block background
+\newlength{\abstractpad}
+\setlength{\abstractpad}{18pt}
+
+% Hyperlinks: blue text only (no boxes/borders).
+\hypersetup{
+  colorlinks=true,
+  linkcolor=natureblue,
+  citecolor=natureblue,
+  urlcolor=natureblue,
+  filecolor=natureblue
+}
+
+% Title block metadata lives in a separate file for cleanliness.
+\input{sections/title}
+
+% Color section headings (level 1/2/3) consistently.
+\titleformat{\section}{\color{natureblue}\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\color{natureblue}\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\color{natureblue}\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{property}{Property}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\newcommand{\bb}[1]{\multicolumn{1}{>{\columncolor{mycyan}}c}{\textbf{{#1}}}}
+\newcommand\notealf[1]{\mbox{}\marginpar{\footnotesize\raggedright\hspace{0pt}\color{blue}\emph{#1}}}
+
+% Cross-reference helper:
+% Use \pref{sec:...}, \pref{fig:...}, \pref{tab:...}, \pref{eq:...}, etc.
+% (See README.md for the recommended label prefixes.)
+\newcommand{\pref}{\prettyref}
+
+\newrefformat{fig}{Fig.~\ref{#1}}
+\newrefformat{tab}{Table~\ref{#1}}
+\newrefformat{sec}{Section~\ref{#1}}
+\newrefformat{app}{Appendix~\ref{#1}}
+\newrefformat{alg}{Algorithm~\ref{#1}}
+\newrefformat{property}{Property~\ref{#1}}
+\newrefformat{theorem}{Theorem~\ref{#1}}
+\newrefformat{corollary}{Corollary~\ref{#1}}
+\newrefformat{proposition}{Proposition~\ref{#1}}
+\newrefformat{def}{Definition~\ref{#1}}
+\newrefformat{eq}{equation~(\ref{#1})}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\usepackage{lscape}
+
+\begin{document}
+
+% ── Logo in top-left corner of the first page ──────────────────────────────
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{%
+    \raisebox{-2.6cm}{\hspace{2cm}%
+      \parbox[t]{\textwidth}{%
+        \includegraphics[height=1.4cm]{figs/colalab.png}\\[-2pt]
+        % {\color{headerblue}\rule{\textwidth}{0.6pt}}%
+      }%
+    }%
+  }%
+}
+
+\vspace*{0.8cm}
+
+% ── Title block (wrapped by two lines) ─────────────────────────────────────
+\MakeReportTitleBlock{}
+
+\vspace{1.0em}
+
+% ── Abstract block (rounded rectangle) ─────────────────────────────────────
+\noindent
+	\begin{tikzpicture}
+	  \node[
+	    fill=titlebox,
+	    rounded corners=10pt,
+	    inner xsep=\abstractpad,
+	    inner ysep=10pt
+	  ]{%
+	    \begin{minipage}{\dimexpr\textwidth-2\abstractpad\relax}
+	      \setlength{\parindent}{0pt}%
+	      \input{sections/abstract}
+	    \end{minipage}
+	  };
+	\end{tikzpicture}
+
+% \tableofcontents
+% \newpage
+
+\input{sections/introduction}
+
+\input{sections/background}
+
+\input{sections/methods}
+
+\input{sections/experiments}
+
+\input{sections/results}
+
+\input{sections/discussion}
+
+\input{sections/conclusion}
+
+\appendix
+\input{sections/appendix}
+
+\section*{Acknowledgment}
+[Optional.] Acknowledge funding, collaborators, reviewers, and other support.
+
+\bibliographystyle{references/IEEEtran}
+\bibliography{references/references}
+
+\end{document}

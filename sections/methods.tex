@@ -1,0 +1,56 @@
+%!TeX root=../main.tex
+% -----------------------------------------------------------------------------
+% sections/methods.tex
+% Purpose: Describe the methodology used in the report.
+%
+% Recommended contents:
+% - High-level overview / design rationale
+% - Formal problem definition (if not already in background)
+% - Core algorithm(s) with pseudo-code
+% - Complexity / resource analysis
+% - Implementation details that affect reproducibility
+% -----------------------------------------------------------------------------
+
+\section{Methods}
+\label{sec:methods}
+
+
+\subsection{Approach Overview}
+\label{sec:approach_overview}
+
+At a high level, the method takes input data $D$, applies a sequence of processing steps, and produces an output artifact (e.g., a model, a set of results, or a system). Refer back to \pref{fig:system_overview} for the placeholder overview diagram.
+
+\subsection{Core Objective (Example Equation)}
+\label{sec:objective}
+
+If your method can be described as an optimization problem, write the objective explicitly and reference it later. For example:
+\begin{equation}
+\min_{\theta}\quad
+\mathcal{J}(\theta) = \mathcal{L}(\theta) + \alpha \mathcal{R}(\theta),
+\label{eq:generic_objective}
+\end{equation}
+where $\mathcal{L}$ is a data-fit term, $\mathcal{R}$ is a regularizer, and $\alpha \ge 0$ balances the two.
+
+\subsection{Algorithm (Example Pseudocode)}
+\label{sec:algorithm}
+
+\pref{alg:training_loop} shows a minimal example using \texttt{algorithm2e}. Replace it with your actual algorithm.
+
+\begin{algorithm}[t!]
+    \DontPrintSemicolon
+    \KwIn{Dataset $D=\{(x_i,y_i)\}_{i=1}^{n}$, hyperparameters $\eta$}
+    \KwOut{Trained parameters $\theta$}
+
+    Initialize $\theta$ (e.g., randomly)\;
+    \For{$t \gets 1$ \KwTo $T$}{
+        Sample a minibatch $B \subseteq D$\;
+        Compute gradient $g \gets \nabla_{\theta}\mathcal{J}(\theta; B)$\;
+        Update $\theta \gets \theta - \eta g$\;
+    }
+    \Return{$\theta$}\;
+    \caption{Example training loop.}
+    \label{alg:training_loop}
+\end{algorithm}
+
+\subsection{Complexity and Resources (Placeholder)}
+\label{sec:complexity}

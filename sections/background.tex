@@ -1,0 +1,65 @@
+%!TeX root=../main.tex
+% -----------------------------------------------------------------------------
+% sections/background.tex
+% Purpose: Background, notation, definitions, and related work.
+%
+% Keep this section concise: define only what is needed to understand the rest
+% of the report. Move long derivations or extended proofs to the appendix.
+% -----------------------------------------------------------------------------
+
+\section{Background and Preliminaries}\label{sec:background}
+
+
+\subsection{Notation (Example Table)}\label{sec:notation}
+
+\pref{tab:notation} shows an example notation table. Replace the symbols and descriptions with those relevant to your report.
+
+\begin{table}[t!]
+    \centering
+    \caption{Example notation table.}\label{tab:notation}
+    \begin{threeparttable}
+        \begin{tabular}{ll}
+            \toprule
+            Symbol & Meaning \\
+            \midrule
+            $n$ & Number of samples \\
+            $d$ & Feature dimension \\
+            $x_i \in \mathbb{R}^d$ & Input feature vector \\
+            $y_i$ & Target / label \\
+            $\theta$ & Model parameters \\
+            \bottomrule
+        \end{tabular}
+    \end{threeparttable}
+\end{table}
+
+\subsection{Definitions and Theorems (Examples)}\label{sec:definitions}
+
+\begin{definition}[Example Definition]\label{def:technical_report}
+A \emph{technical report} is a document that describes a technical problem, the adopted approach, and supporting evidence (e.g., experiments, proofs, or analyses) in a reproducible way.
+\end{definition}
+
+We will refer back to \pref{def:technical_report} to illustrate cross-referencing in the template.
+
+\begin{theorem}[Example Theorem]\label{theorem:amgm}
+For any real numbers $a$ and $b$, we have $a^2 + b^2 \ge 2ab$.
+\end{theorem}
+
+\begin{proof}
+The claim follows from the fact that $(a-b)^2 \ge 0$, which expands to $a^2 + b^2 - 2ab \ge 0$.
+\end{proof}
+
+\subsection{Example Equation}\label{sec:example_equation}
+
+Use numbered equations for results that you will reference. For example, a standard regularized least-squares objective is:
+\begin{equation}
+\min_{\theta}\quad
+\mathcal{L}(\theta)
+=
+\frac{1}{n}\sum_{i=1}^{n}\big\|f_{\theta}(x_i) - y_i\big\|_2^2
+\;+\;
+\lambda\|\theta\|_2^2,
+\label{eq:least_squares}
+\end{equation}
+where $\lambda \ge 0$ controls the amount of regularization.
+
+\subsection{Related Work (Placeholder)}\label{sec:related_work}

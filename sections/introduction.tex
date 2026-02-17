@@ -1,0 +1,45 @@
+%!TeX root=../main.tex
+% -----------------------------------------------------------------------------
+% sections/introduction.tex
+% Purpose: Introduce the problem, scope, and contributions.
+%
+% How to use:
+% - Keep labels stable and unique across the document.
+% -----------------------------------------------------------------------------
+
+\section{Introduction}\label{sec:introduction}
+
+
+This template is intentionally minimal in formatting and focuses on structure. For LaTeX usage and conventions, see standard references such as~\cite{lamport1994latex,knuth1984texbook}.
+
+\subsection{Problem Statement}\label{sec:problem_statement}
+
+
+\subsection{Contributions}\label{sec:contributions}
+
+\begin{itemize}
+    \item Contribution 1.
+    \item Contribution 2.
+    \item Contribution 3.
+\end{itemize}
+
+\subsection{System Overview (Example Figure)}\label{sec:system_overview}
+
+As a placeholder example, \pref{fig:system_overview} shows a simple ``input-method-output'' diagram. Replace it with a figure that matches your system or workflow.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=1.5cm]
+        \node[component, anchor=center] (input) {Input};
+        \node[component, anchor=center, right=2.2cm of input] (method) {Method};
+        \node[component, anchor=center, right=2.2cm of method] (output) {Output};
+
+        \draw[arrow] (input) -- (method);
+        \draw[arrow] (method) -- (output);
+    \end{tikzpicture}
+    \caption{Example overview diagram. Replace with a figure that matches your report.}\label{fig:system_overview}
+\end{figure}
+
+\subsection{Organization}\label{sec:organization}
+
+The rest of this report is organized as follows.\pref{sec:background} covers background and definitions.\pref{sec:methods} describes the methodology and core algorithm.\pref{sec:experiments} documents the experimental setup.\pref{sec:results} presents the results.\pref{sec:discussion} discusses limitations and implications.\pref{sec:conclusion} concludes the report. Additional details can be placed in\pref{app:additional_details}.
