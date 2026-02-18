@@ -57,6 +57,8 @@
 \NewDocumentCommand{\ReportSubtitle}{m}{\tl_gset:Nn \g_report_subtitle_tl {#1}}
 \NewDocumentCommand{\ReportEqualNote}{m}{\tl_gset:Nn \g_report_equal_note_tl {#1}}
 \NewDocumentCommand{\ReportCorrespondingLabel}{m}{\tl_gset:Nn \g_report_corr_label_tl {#1}}
+\NewDocumentCommand{\ReportTitleText}{}{\tl_use:N \g_report_title_tl}
+\NewDocumentCommand{\ReportTitleMarkText}{}{\tl_use:N \g_report_title_mark_tl}
 
 \NewDocumentCommand{\ReportClearAuthors}{}{
   \seq_gclear:N \g_report_authors_seq
